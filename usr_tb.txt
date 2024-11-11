@@ -1,0 +1,103 @@
+
+--------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:
+--
+-- Create Date:   16:26:43 11/10/2024
+-- Design Name:   usr
+-- Module Name:   usr_tb.vhd
+-- Project Name:  usr
+-- Target Device:  
+-- Tool versions:  
+-- Description:   
+-- 
+-- VHDL Test Bench Created by ISE for module: usr
+--
+-- Dependencies:
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+-- Notes: 
+-- This testbench has been automatically generated using types std_logic and
+-- std_logic_vector for the ports of the unit under test.  Xilinx recommends 
+-- that these types always be used for the top-level I/O of a design in order 
+-- to guarantee that the testbench will bind correctly to the post-implementation 
+-- simulation model.
+--------------------------------------------------------------------------------
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_unsigned.all;
+USE ieee.numeric_std.ALL;
+
+ENTITY usr_tb_vhd IS
+END usr_tb_vhd;
+
+ARCHITECTURE behavior OF usr_tb_vhd IS 
+
+	-- Component Declaration for the Unit Under Test (UUT)
+	COMPONENT usr
+	PORT(
+		din : IN std_logic_vector(3 downto 0);
+		clk : IN std_logic;
+		rst : IN std_logic;
+		s : IN std_logic_vector(1 downto 0);       
+		dout : INOUT std_logic_vector(3 downto 0)
+		);
+	END COMPONENT;
+
+	--Inputs
+	SIGNAL clk :  std_logic := '0';
+	SIGNAL rst :  std_logic := '0';
+	SIGNAL din :  std_logic_vector(3 downto 0) := (others=>'0');
+	SIGNAL s :  std_logic_vector(1 downto 0) := (others=>'0');
+
+	--BiDirs
+	SIGNAL dout :  std_logic_vector(3 downto 0);
+
+BEGIN
+
+	-- Instantiate the Unit Under Test (UUT)
+	uut: usr PORT MAP(
+		din => din,
+		clk => clk,
+		rst => rst,
+		s => s,
+		dout => dout
+	);
+
+	tb : PROCESS
+	BEGIN
+      clk <= '0';
+		
+		-- Wait 100 ns for global reset to finish
+		wait for  clk_period/2;
+		clk <= '1';
+		
+		-- Wait 100 ns for global reset to finish
+		wait for  clk_period/2;
+		-- Place stimulus here
+
+		wait; -- will wait forever
+	END PROCESS;
+   begin 
+	wait for 100 ns;
+	rst <= '1';
+	assert dout <="0000" report "error";
+	wait for  clk_period*10;
+	rst <= '0';
+	din <="1000";
+	s<="01";
+	
+	assert dout <="1000" report "error";
+	wait for  clk_period/2;
+	
+	
+	assert dout <="1100" report "error";
+	wait for  clk_period/2;
+	assert dout <="1110" report "error";
+	wait for  clk_period/2;
+	wait;
+	end process;
+END;

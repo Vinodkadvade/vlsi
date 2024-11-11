@@ -1,0 +1,36 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+---- Uncomment the following library declaration if instantiating
+---- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity ha11 is
+    Port ( a : in  STD_LOGIC;
+           b : in  STD_LOGIC;
+           s : out  STD_LOGIC;
+           c : out  STD_LOGIC);
+end ha11;
+
+architecture Behavioral of ha11 is
+
+
+component xor22 is
+port(x,y:in std_logic;
+       z:out std_logic);
+end component;
+
+component and22 is
+port(p,q:in std_logic;
+     r:out std_logic);
+end component;
+begin
+U1:xor22 port map(a,b,s);
+U2:and22 port map(a,b,c);
+
+
+end Behavioral;
+

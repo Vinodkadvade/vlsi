@@ -1,0 +1,10 @@
+with s select            #a,b,s,c (3 downto 0)
+F<=a + b when "0000",
+   a - b when "0001",
+   a + 1 when "0010",
+    a - 1 when "0011",
+    a and  b when "0100",
+      .
+       .
+    Not a when "0111",
+    "0000" when others

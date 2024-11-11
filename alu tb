@@ -1,0 +1,9 @@
+stim_proc:process
+begin
+a<="0000";b<="0001";s<="0011";
+assert f<="1111";report 'error in logic";
+wait for 100ns;
+a<="0011";b<="0100";s<="0001";
+assert f<="0111";report "error in logic"
+wait for 100ns;
+comment all clocks

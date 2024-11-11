@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+---- Uncomment the following library declaration if instantiating
+---- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity mux81 is
+    Port ( a : in  STD_LOGIC_VECTOR (7 downto 0);
+           s : in  STD_LOGIC_VECTOR (2 downto 0);
+           y : out  STD_LOGIC);
+end mux81;
+
+architecture Behavioral of mux81 is
+begin process(a,s)
+
+begin
+case s is
+when"000"=>y<=a(0);
+when"001"=>y<=a(1);
+when"010"=>y<=a(2);
+when"011"=>y<=a(3);
+when"100"=>y<=a(4);
+when"101"=>y<=a(5);
+when"110"=>y<=a(6);
+when others =>y<=a(7);
+end case;
+end process;
+
+
+
+
+
+
+
+end Behavioral;
+

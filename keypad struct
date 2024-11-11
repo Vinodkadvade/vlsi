@@ -1,0 +1,28 @@
+ library IEEE;
+ use IEEE.STD_LOGIC_1164.ALL;
+ use IEEE.STD_LOGIC_ARITH.ALL;
+ use IEEE.STD_LOGIC_UNSIGNED.ALL;
+ entity keypad_total is
+ Port ( RO : in std_logic_vector(3 downto 0);
+ COLM : in std_logic_vector(3 downto 0);
+ SEVEN : out std_logic_vector(6 downto 0);
+ clock: in std_logic);
+ end keypad_total;
+ architecture structural of keypad_total is
+ signal temp : std_logic_vector(3 downto 0);
+ signal tout : std_logic_vector(6 downto 0);
+ component keypad_main is
+ Port ( row : in std_logic_vector(3 downto 0);
+ col : in std_logic_vector(3 downto 0);
+ kout : out std_logic_vector(3 downto 0);
+ clk : in std_logic);
+ end component;
+ component keypad_disp is
+ Port ( din : in std_logic_vector(3 downto 0);
+ dout : out std_logic_vector(6 downto 0));
+ end component;
+ begin
+ C1: keypad_main port map(RO,COLM,temp,clock);
+ C2: keypad_disp port map(temp,tout);
+ SEVEN<=tout;
+ end structural

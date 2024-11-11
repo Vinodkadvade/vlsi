@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity usr is
+    Port ( din : in  STD_LOGIC_VECTOR (3 downto 0);
+           clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
+           s : in  STD_LOGIC_VECTOR (1 downto 0);
+           dout : inout  STD_LOGIC_VECTOR (3 downto 0));  
+end usr;
+
+architecture Behavioral of usr is
+    
+    signal msbin : STD_LOGIC;
+    signal lsbin : STD_LOGIC;
+    --signal dout_internal : STD_LOGIC_VECTOR (3 downto 0); -- Internal signal for dout
+begin
+    process(clk, rst)
+    begin
+        if rst = '1' then
+            dout <= "0000";
+        elsif clk'event and clk = '1' then
+   
+            msbin <= din(3);
+            lsbin <= din(0);
+
+            case s is
+                when "00" => dout <= dout; 
+                when "01" => dout <= msbin & dout(3 downto 1); 
+                when "10" => dout <= dout(2 downto 0) & lsbin; 
+                when "11" => dout <= din; 
+                when others => dout <= "0000";
+            end case;
+        end if;
+    end process;
+    
+    dout <= dout; -- Assign internal signal to output port
+end Behavioral;

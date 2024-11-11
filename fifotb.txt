@@ -1,0 +1,100 @@
+--------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:
+--
+-- Create Date:   16:49:21 11/10/2024
+-- Design Name:   STD_FIFO
+-- Module Name:   fifo_tb.vhd
+-- Project Name:  fifo
+-- Target Device:  
+-- Tool versions:  
+-- Description:   
+-- 
+-- VHDL Test Bench Created by ISE for module: STD_FIFO
+--
+-- Dependencies:
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+-- Notes: 
+-- This testbench has been automatically generated using types std_logic and
+-- std_logic_vector for the ports of the unit under test.  Xilinx recommends 
+-- that these types always be used for the top-level I/O of a design in order 
+-- to guarantee that the testbench will bind correctly to the post-implementation 
+-- simulation model.
+--------------------------------------------------------------------------------
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_unsigned.all;
+USE ieee.numeric_std.ALL;
+
+ENTITY fifo_tb_vhd IS
+END fifo_tb_vhd;
+
+ARCHITECTURE behavior OF fifo_tb_vhd IS 
+
+	-- Component Declaration for the Unit Under Test (UUT)
+	COMPONENT STD_FIFO
+	PORT(
+		CLK : IN std_logic;
+		RST : IN std_logic;
+		WriteEn : IN std_logic;
+		Dataln : IN std_logic_vector(7 downto 0);
+		ReadEn : IN std_logic;          
+		DataOut : OUT std_logic_vector(7 downto 0);
+		Empty : OUT std_logic;
+		Full : OUT std_logic
+		);
+	END COMPONENT;
+
+	--Inputs
+	SIGNAL CLK :  std_logic := '0';
+	SIGNAL RST :  std_logic := '0';
+	SIGNAL WriteEn :  std_logic := '0';
+	SIGNAL ReadEn :  std_logic := '0';
+	SIGNAL Dataln :  std_logic_vector(7 downto 0) := (others=>'0');
+
+	--Outputs
+	SIGNAL DataOut :  std_logic_vector(7 downto 0);
+	SIGNAL Empty :  std_logic;
+	SIGNAL Full :  std_logic;
+
+BEGIN
+
+	-- Instantiate the Unit Under Test (UUT)
+	uut: STD_FIFO PORT MAP(
+		CLK => CLK,
+		RST => RST,
+		WriteEn => WriteEn,
+		Dataln => Dataln,
+		ReadEn => ReadEn,
+		DataOut => DataOut,
+		Empty => Empty,
+		Full => Full
+	);
+
+	tb : PROCESS
+	BEGIN
+       writein<='1';
+       datain<="11110000";
+  
+		-- Wait 100 ns for global reset to finish
+		wait for 100 ns;
+        readin<='1';
+ 
+       datain<="10101010";
+		-- Place stimulus here
+		wait for 100 ns;
+          readin<='0';
+assert dataout <="11110000" report "error";
+		wait for 100 ns;
+assert dataout <="10101010" report "error";
+		wait for 100 ns;
+		wait for 100 ns;
+
+		wait; -- will wait forever
+	END PROCESS;
+
+END;
